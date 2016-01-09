@@ -1,0 +1,39 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _ZLopALb2EeW-G46J2j_gow
+Element-Name: FUSETOOLS-1233
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _5N5soLbrEeW-G46J2j_gow
+Runtime-Version: 2.0.2.201511100828
+Save-Time: 1/9/16 12:33 PM
+Testcase-Type: ecl
+
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa
+Content-Type: text/plain
+Entry-Name: .description
+
+Open camel context file after the creation of a new FUSE project
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa--
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+proc "test-editor-open" [val archeTypeIndex] [val camelContextFileName] {
+
+ let [val fuseProjectName "test"] {
+    new-fuse-project $archeTypeIndex $fuseProjectName        
+	get-button "Save (M1+S)" | click
+	get-editor $camelContextFileName | close
+    delete-project $fuseProjectName		
+ }
+
+}
+
+test-editor-open "camel-archetype-activemq" "camel-context.xml"
+test-editor-open "camel-archetype-blueprint" "blueprint.xml"
+test-editor-open "camel-archetype-spring" "camel-context.xml"
+test-editor-open "camel-archetype-spring-dm" "camel-context.xml"
+test-editor-open "camel-archetype-web" "applicationContext.xml"
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

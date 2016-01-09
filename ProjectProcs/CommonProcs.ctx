@@ -1,0 +1,53 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Context-Type: org.eclipse.rcptt.ctx.ecl
+Element-Name: CommonProcs
+Element-Type: context
+Element-Version: 2.0
+Id: _AcqYYLb3EeW-G46J2j_gow
+Runtime-Version: 2.0.2.201511100828
+Save-Time: 1/9/16 12:33 PM
+
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa
+Content-Type: text/plain
+Entry-Name: .description
+
+Utility Functions
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa--
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
+Content-Type: text/ecl
+Entry-Name: .ecl.context
+
+proc "new-fuse-project" [val projectArcheType][val projectName] {
+
+get-menu "File/New/Project..." | click
+with [get-window "New Project"] {
+    get-tree | select "Fuse Tooling/Fuse Project"
+    get-button "Next >" | click
+}
+with [get-window "New Fuse Project"] {
+    get-combo -after [get-label "Project Name"] | set-text $projectName
+    get-button "Next >" | click
+
+    with [get-editbox -after [get-label "Filter:"]] {
+        click-text
+        key-type "M1+v"
+        set-text $projectArcheType
+    }
+    get-table | select "org.apache.camel.archetypes"    
+    get-button Finish | click
+}
+
+}
+
+proc "delete-project" [val projectName] {
+
+get-view "Project Explorer" | get-tree | select $projectName | get-menu Delete | click
+with [get-window "Delete Resources"] {
+    get-button "Delete project contents on disk (cannot be undone)" | check
+    get-button OK | click
+}
+
+}
+
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998--
