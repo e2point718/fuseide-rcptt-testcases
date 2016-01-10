@@ -1,0 +1,61 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: FUSETOOLS-1223
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _f9OqQLdGEeW6fKAXTBAJdQ
+Runtime-Version: 2.0.2.201511100828
+Save-Time: 1/10/16 9:05 AM
+Testcase-Type: ecl
+
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa
+Content-Type: text/plain
+Entry-Name: .description
+
+Run as / Debug as Local Camel Context available on project
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa--
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+new-fuse-project "camel-archetype-activemq" "activemq"
+new-fuse-project "camel-archetype-blueprint" "blueprint"
+new-fuse-project "camel-archetype-spring" "spring"
+new-fuse-project "camel-archetype-spring-dm" "spring-dm"
+new-fuse-project "camel-archetype-web" "web"     
+
+//the JVM processes launched here will be terminated by the next run
+
+with [get-view "Project Explorer" | get-tree] {
+	//make sure existing menu works
+    select "activemq/Camel Contexts/src\\/main\\/resources\\/META-INF\\/spring\\/camel-context.xml" 
+        | get-menu "Run As/3 Local Camel Context (without tests)" | click
+    select "blueprint/Camel Contexts/src\\/main\\/resources\\/OSGI-INF\\/blueprint\\/blueprint.xml" 
+        | get-menu "Run As/3 Local Camel Context (without tests)" | click
+    select "spring/Camel Contexts/src\\/main\\/resources\\/META-INF\\/spring\\/camel-context.xml" 
+        | get-menu "Run As/3 Local Camel Context (without tests)" | click
+    select "spring-dm/Camel Contexts/src\\/main\\/resources\\/META-INF\\/spring\\/camel-context.xml" 
+        | get-menu "Run As/3 Local Camel Context (without tests)" | click
+    select "web/Camel Contexts/src\\/main\\/webapp\\/WEB-INF\\/applicationContext.xml" 
+        | get-menu "Run As/3 Local Camel Context (without tests)" | click
+    //check menu at project level    
+    select activemq | get-menu "Run As/5 Local Camel Context (without tests)" | click
+    select blueprint | get-menu "Run As/5 Local Camel Context (without tests)" | click
+    select spring | get-menu "Run As/5 Local Camel Context (without tests)" | click
+    select "spring-dm" | get-menu "Run As/5 Local Camel Context (without tests)" | click
+    select web | get-menu "Run As/5 Local Camel Context (without tests)" | click
+}
+
+
+
+get-view "Project Explorer" | get-tree | select "spring/Camel Contexts" | get-menu "New Camel XML File" | click
+get-window "New Camel Context XML File" | get-button Finish | click
+
+get-view "Project Explorer" | get-tree | select spring | get-menu "Run As/5 Local Camel Context (without tests)" | click
+with [get-window "Select Camel XML file"] {
+    get-table | select "camelContext.xml"
+    get-button OK | click
+}
+		
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--
